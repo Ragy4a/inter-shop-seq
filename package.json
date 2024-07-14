@@ -10,17 +10,21 @@
     "dbdrop": "npx sequelize db:drop",
     "migall": "npx sequelize db:migrate",
     "migun": "npx sequelize db:migrate:undo:all",
-    "seedall": "npx sequelize db:seed:all",
+    "seedall": "node ./seedAll.js",
     "seedundo": "npx sequelize db:seed:undo:all"
   },
   "author": "Ragy4a",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.3",
     "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }
