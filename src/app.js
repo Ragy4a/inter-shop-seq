@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express');
 
-// const routers = require('./routers');
+const routers = require('./routers');
 
 // const { validationErrorHandler, errorHandler } = require('./middleware/errorHandlers.js');
 
@@ -10,6 +10,6 @@ app.use(express.json());
 app.use(express.static(path.resolve('public')));
 
 // app.use(validationErrorHandler, errorHandler)
-// app.use(routers);
+app.use(routers);
 
 module.exports = app;

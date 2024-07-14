@@ -1,0 +1,30 @@
+GET http://localhost:5000/brands
+
+###
+
+GET http://localhost:5000/brands/3
+
+###
+
+POST http://localhost:5000/brands
+Content-Type: application/json
+
+{
+  "title": "Meizu",
+  "description": "Meizu Corparation"
+}
+
+###
+
+PUT http://localhost:5000/brands
+Content-Type: application/json
+
+{
+  "id": 3,
+  "title": "Meizu updated",
+  "description": "Meizu Corparation"
+}
+
+###
+
+DELETE http://localhost:5000/brands/3
