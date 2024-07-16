@@ -1,0 +1,32 @@
+GET http://localhost:5000/customers
+
+###
+
+GET http://localhost:5000/customers/4
+
+###
+
+POST http://localhost:5000/customers
+Content-Type: application/json
+
+{
+  "name": "John Doe Clone",
+  "email": "new.clone.of.john@gmail.com",
+  "password": "241241242142141"
+}
+
+###
+
+PUT http://localhost:5000/customers
+Content-Type: application/json
+
+{
+  "id": 4,
+  "name": "John Doe Updated",
+  "email": "john.doe2@example.com",
+  "password": "321242324"
+}
+
+###
+
+DELETE http://localhost:5000/customers/8

@@ -25,8 +25,7 @@ class BrandController {
 
   createBrand = async (req, res) => {
     try {
-      const { title, description } = req.body;
-      const brand = await Brand.create({ title, description });
+      const brand = await Brand.create(req.body);
       res.status(201).json(brand);
     } catch (error) {
       res.status(500).send(error.message);
@@ -35,14 +34,12 @@ class BrandController {
 
   updateBrand = async (req, res) => {
     try {
-      const { id, title, description } = req.body;
+      const { id } = req.body;
       const brand = await Brand.findByPk(id);
       if (!brand) {
         return res.status(404).json('Brand not found');
       }
-      brand.title = title;
-      brand.description = description;
-      await brand.save();
+      await brand.update(req.body);
       res.json(brand);
     } catch (error) {
       res.status(500).send(error.message);
