@@ -11,7 +11,7 @@ Content-Type: application/json
 
 {
   "name": "John Doe Clone",
-  "email": "new.clone.of.john@gmail.com",
+  "email": "new.clone.of2323.john@gmail.com",
   "password": "241241242142141"
 }
 
@@ -21,7 +21,7 @@ PUT http://localhost:5000/customers
 Content-Type: application/json
 
 {
-  "id": 4,
+  "id": 10,
   "name": "John Doe Updated",
   "email": "john.doe2@example.com",
   "password": "321242324"
@@ -29,4 +29,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:5000/customers/8
+DELETE http://localhost:5000/customers/10

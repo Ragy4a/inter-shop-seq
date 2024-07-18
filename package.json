@@ -10,7 +10,7 @@
     "dbdrop": "npx sequelize db:drop",
     "migall": "npx sequelize db:migrate",
     "migun": "npx sequelize db:migrate:undo:all",
-    "seedall": "node ./seedAll.js",
+    "seedall": "npx sequelize db:seed:all",
     "seedundo": "npx sequelize db:seed:undo:all"
   },
   "author": "Ragy4a",
