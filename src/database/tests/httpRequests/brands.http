@@ -1,8 +1,8 @@
-GET http://localhost:5000/brands
+GET http://localhost:5000/api/brands
 
 ###
 
-GET http://localhost:5000/brands/3
+GET http://localhost:5000/api/brands/3
 
 ###
 

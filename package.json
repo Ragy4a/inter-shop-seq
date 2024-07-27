@@ -8,10 +8,10 @@
     "start": "nodemon ./index.js",
     "dbcreate": "npx sequelize db:create",
     "dbdrop": "npx sequelize db:drop",
-    "migall": "npx sequelize db:migrate",
-    "migun": "npx sequelize db:migrate:undo:all",
-    "seedall": "npx sequelize db:seed:all",
-    "seedundo": "npx sequelize db:seed:undo:all"
+    "miga": "npx sequelize db:migrate",
+    "migu": "npx sequelize db:migrate:undo:all",
+    "seeda": "npx sequelize db:seed:all",
+    "seedu": "npx sequelize db:seed:undo:all"
   },
   "author": "Ragy4a",
   "license": "ISC",

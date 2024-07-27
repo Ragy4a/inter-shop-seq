@@ -3,8 +3,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class ItemOrder extends Model {
     static associate(models) {
-      ItemOrder.belongsTo(models.Item, { foreignKey: 'item_id' });
-      ItemOrder.belongsTo(models.Order, { foreignKey: 'order_id' });
     }
   }
 
@@ -17,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      onDelete: 'SET NULL'
     },
     order_id: {
       type: DataTypes.INTEGER,
@@ -27,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      onDelete: 'SET NULL'
     }
   }, {
     sequelize,

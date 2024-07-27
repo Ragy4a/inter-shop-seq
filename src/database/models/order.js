@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     static associate(models) {
       Order.belongsTo(models.Customer, { foreignKey: 'customer_id' });
-      Order.belongsToMany(models.Item, { through: 'Item_Order', foreignKey: 'order_id' });
+      Order.belongsToMany(models.Item, { through: models.ItemOrder });
     }
   }
 
