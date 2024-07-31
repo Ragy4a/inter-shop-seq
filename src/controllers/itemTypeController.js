@@ -1,58 +1,58 @@
-const createError = require('http-errors')
-const { Brand, sequelize } = require('../database/models');
+const createError = require('http-errors');
+const { ItemType, sequelize } = require('../database/models');
 
-class BrandController {
-  getAllBrands = async (req, res, next) => {
+class ItemTypeController {
+  getAllItemTypes = async (req, res, next) => {
     try {
       const { limit, offset } = req.pagination;
-      const brands = await Brand.findAll({
+      const itemTypes = await ItemType.findAll({
         attributes: ['id', 'title'],
         limit,
         offset,
         raw: true,
       });
-      if(!brands) {
-        return next(createError(404, 'Brands not found!'));
+      if(!itemTypes) {
+        return next(createError(404, 'Item Types not found!'));
       }
-      res.status(200).json(brands);
+      res.status(200).json(itemTypes);
     } catch (error) {
       console.log(error.message);
       next(error);
     }
   }
 
-  getBrandById = async (req, res, next) => {
+  getItemTypeById = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const brand = await Brand.findByPk(id, {
+      const itemType = await ItemType.findByPk(id, {
         attributes: {
           exclude: ['createdAt', 'updatedAt']
         },
         raw: true,
       });
-      if (!brand) {
-        return next(createError(404, 'Brand not found!'));
+      if (!itemType) {
+        return next(createError(404, 'Item Type not found!'));
       }
-      res.status(200).json(brand);
+      res.status(200).json(itemType);
     } catch (error) {
       console.log(error.message);
       next(error);
     }
   }
 
-  createBrand = async (req, res, next) => {
+  createItemType = async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
-      const brand = await Brand.create(req.body, {
+      const itemType = await ItemType.create(req.body, {
         transaction: t,
         raw: true,
       });
-      if(!brand) {
+      if(!itemType) {
         await t.rollback();
-        return next(createError(404, 'Brand not created!'));
+        return next(createError(404, 'Item Type not created!'));
       }
       await t.commit();
-      res.status(201).json(brand);
+      res.status(201).json(itemType);
     } catch (error) {
       console.log(error.message);      
       await t.rollback();
@@ -60,23 +60,23 @@ class BrandController {
     }
   }
 
-  updateBrand = async (req, res, next) => {
+  updateItemType = async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
       const { id } = req.body;
-      const brand = await Brand.update(req.body, {
+      const itemType = await ItemType.update(req.body, {
         where: {
           id,
         },
         transaction: t,
         raw: true,
       });
-      if (!brand) {
+      if (!itemType) {
         await t.rollback();
-        return next(createError(404, 'Brand not found!'));
+        return next(createError(404, 'Item Type not found!'));
       }
       await t.commit();
-      res.status(200).json(brand);
+      res.status(200).json(itemType);
     } catch (error) {
       console.log(error.message);
       await t.rollback();
@@ -84,20 +84,20 @@ class BrandController {
     }
   }
 
-  deleteBrand = async (req, res, next) => {
+  deleteItemType = async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
       const { id } = req.params;
-      const deletedBrand = await Brand.destroy({
+      const deletedItemType = await ItemType.destroy({
         where: {
           id
         },
         transaction: t,
         raw: true,
       });
-      if(!deletedBrand) {
+      if(!deletedItemType) {
         await t.rollback();
-        return next(createError(404, 'Brand not found!'))
+        return next(createError(404, 'Item Type not found!'))
       }
       await t.commit();
       res.status(204).send();
@@ -109,4 +109,4 @@ class BrandController {
   }
 };
 
-module.exports = new BrandController();
+module.exports = new ItemTypeController();

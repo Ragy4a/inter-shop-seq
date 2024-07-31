@@ -1,62 +1,110 @@
-const { Customer } = require('../database/models');
+const createError = require('http-errors');
+const { Customer, sequelize } = require('../database/models');
 
 class CustomerController {
-  getAllCustomers = async (req, res) => {
+  getAllCustomers = async (req, res, next) => {
     try {
-      const customers = await Customer.findAll();
-      res.json(customers);
+      const { limit, offset } = req.pagination;
+      const customers = await Customer.findAll({
+        attributes: ['id', 'name'],
+        limit,
+        offset,
+        raw: true,
+      });
+      if (!customers) {
+        return next(createError(404, 'Customers not found!'));
+      }
+      res.status(200).json(customers);
     } catch (error) {
-      res.status(500).send(error.message);
+      console.log(error.message);
+      next(error);
     }
   }
 
-  getCustomerById = async (req, res) => {
+  getCustomerById = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const customer = await Customer.findByPk(id);
+      const customer = await Customer.findByPk(id, {
+        attributes: {
+          exclude: ['createdAt', 'updatedAt']
+        },
+        raw: true,
+      });
       if (!customer) {
-        return res.status(404).json('Customer not found');
+        return next(createError(404, 'Customer not found!'));
       }
-      res.json(customer);
+      res.status(200).json(customer);
     } catch (error) {
-      res.status(500).send(error.message);
+      console.log(error.message);
+      next(error);
     }
   }
 
-  createCustomer = async (req, res) => {
+  createCustomer = async (req, res, next) => {
+    const t = await sequelize.transaction();
     try {
-      const customer = await Customer.create(req.body);
+      const customer = await Customer.create(req.body, {
+        transaction: t,
+        raw: true,
+      });
+      if (!customer) {
+        await t.rollback();
+        return next(createError(404, 'Customer not found!'));
+      }
+      await t.commit();
       res.status(201).json(customer);
     } catch (error) {
-      res.status(500).send(error.message);
+      console.log(error.message);
+      await t.rollback();
+      next(error);
     }
   }
 
-  updateCustomer = async (req, res) => {
+  updateCustomer = async (req, res, next) => {
+    const t = await sequelize.transaction();
     try {
       const { id } = req.body;
-      const customer = await Customer.findByPk(id);
+      const customer = await Customer.update(req.body, {
+        where: {
+          id,
+        },
+        transaction: t,
+        raw: true,
+      });
       if (!customer) {
-        return res.status(404).json('Customer not found');
+        await t.rollback();
+        return next(createError(404, 'Customer not found!'));
       }
-      await customer.update(req.body);
-      res.json(customer);
+      await t.commit();
+      res.status(200).json(customer);
     } catch (error) {
-      res.status(500).send(error.message);
+      console.log(error.message);
+      await t.rollback();
+      next(error);
     }
   }
 
-  deleteCustomer = async (req, res) => {
+  deleteCustomer = async (req, res, next) => {
+    const t = await sequelize.transaction();
     try {
       const { id } = req.params;
-      const customer = await Customer.findByPk(id);
-      if (!customer) {
-        return res.status(404).json('Customer not found');
+      const deletedCustomer = await Customer.destroy({
+        where: {
+          id
+        },
+        transaction: t,
+        raw: true,
+      });
+      if (!deletedCustomer) {
+        await t.rollback();
+        return next(createError(404, 'Customer not found!'));
       }
-      await customer.destroy();
+      await t.commit();
       res.status(204).send();
     } catch (error) {
-      res.status(500).send(error.message);
+      console.log(error.message);
+      await t.rollback();
+      next(error);
     }
   }
 }

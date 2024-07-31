@@ -1,8 +1,8 @@
-GET http://localhost:5000/customers
+GET http://localhost:5000/api/customers
 
 ###
 
-GET http://localhost:5000/customers/4
+GET http://localhost:5000/api/customers/4
 
 ###
 

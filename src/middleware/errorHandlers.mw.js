@@ -1,4 +1,5 @@
 const { ValidationError } = require('yup');
+const { Sequelize: { BaseError } } = require('../database/models');
 
 module.exports.validationErrorHandler = (err, req, res, next) => {
     if(err instanceof ValidationError) {
@@ -11,6 +12,19 @@ module.exports.validationErrorHandler = (err, req, res, next) => {
     }
     next(err)
 };
+
+module.exports.sequelizeErrorHandler = (err, req, res, next) => {
+    if (err instanceof BaseError) {
+      return res.status(406).send({
+        errors: [{
+          title: 'Sequelize Error', 
+          details: err.errors
+        }]
+      }) 
+    };
+    next(err);
+  };
+  
 
 module.exports.errorHandler = (err, req, res, next) => {
 

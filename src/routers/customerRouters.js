@@ -2,9 +2,11 @@ const { Router } = require('express');
 const router = new Router();
 const customerController = require('../controllers/customerController');
 
+const { paginate: { paginateData } } = require('../middleware');
+
 router
     .route('/')
-        .get(customerController.getAllCustomers)
+        .get(paginateData, customerController.getAllCustomers)
         .post(customerController.createCustomer)
         .put(customerController.updateCustomer);
 router
