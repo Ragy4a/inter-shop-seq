@@ -1,0 +1,40 @@
+GET http://localhost:5000/api/items
+
+###
+
+GET http://localhost:5000/api/items/12
+
+###
+
+POST http://localhost:5000/api/items
+Content-Type: application/json
+
+{
+    "price": 400,
+    "amount": 2,
+    "category": "Furniture",
+    "type": "Smartphone",
+    "brand": "LG",
+    "model": "LG G8",
+    "store": "Branch Store"
+}
+
+###
+
+PUT http://localhost:5000/api/items
+Content-Type: application/json
+
+{
+    "id": 12,
+    "price": 400,
+    "amount": 2,
+    "category": "Appliances",
+    "type": "Television",
+    "brand": "Dell",
+    "model": "LG G8",
+    "store": "Branch Store"
+}
+
+###
+
+DELETE http://localhost:5000/api/items/12

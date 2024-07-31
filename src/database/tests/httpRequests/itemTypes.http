@@ -1,0 +1,30 @@
+GET http://localhost:5000/api/types
+
+###
+
+GET http://localhost:5000/api/types/2
+
+###
+
+POST http://localhost:5000/api/types
+Content-Type: application/json
+
+{
+  "title": "Test",
+  "description": "Test description"
+}
+
+###
+
+PUT http://localhost:5000/api/types
+Content-Type: application/json
+
+{
+  "id": 11,
+  "title": "Updated Test",
+  "description": "Updated test description"
+}
+
+###
+
+DELETE http://localhost:5000/api/types/11

@@ -100,6 +100,7 @@ class OrderController {
           id,
         },
         transaction: t,
+        returning: ['*'],
         raw: true,
       });
       if (!order) {

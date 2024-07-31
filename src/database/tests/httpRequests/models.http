@@ -1,0 +1,31 @@
+GET http://localhost:5000/api/models
+
+###
+
+GET http://localhost:5000/api/models/2
+
+###
+
+POST http://localhost:5000/api/models
+Content-Type: application/json
+
+{
+  "title": "iPhone 17",
+  "description": "Apple iPhone 17",
+  "brand": "Apple"
+}
+
+###
+
+PUT http://localhost:5000/api/models
+Content-Type: application/json
+
+{
+  "id": 11,
+  "title": "iPhone 17 test",
+  "description": "Apple iPhone 17 updated",
+  "brand": "Apple"
+}
+###
+
+DELETE http://localhost:5000/api/models/11

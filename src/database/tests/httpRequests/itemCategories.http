@@ -1,0 +1,32 @@
+GET http://localhost:5000/api/categories
+
+###
+
+GET http://localhost:5000/api/categories/4
+
+###
+
+POST http://localhost:5000/api/categories
+Content-Type: application/json
+
+{
+    "title": "Test",
+    "description": "test item-category",
+    "brand": "Samsung"
+}
+
+###
+
+PUT http://localhost:5000/api/categories
+Content-Type: application/json
+
+{
+    "id": 4,
+    "title": "Updated Test",
+    "description": "New Description",
+    "brand": "Apple"
+}
+
+###
+
+DELETE http://localhost:5000/api/categories/4

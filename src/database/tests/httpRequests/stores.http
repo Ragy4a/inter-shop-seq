@@ -1,0 +1,30 @@
+GET http://localhost:5000/api/stores
+
+###
+
+GET http://localhost:5000/api/stores/2
+
+###
+
+POST http://localhost:5000/api/stores
+Content-Type: application/json
+
+{
+  "title": "Test store",
+  "description": "Test store description"
+}
+
+###
+
+PUT http://localhost:5000/api/stores
+Content-Type: application/json
+
+{
+  "id": 11,
+  "title": "Test updated",
+  "description": "Test updated store description"
+}
+
+###
+
+DELETE http://localhost:5000/api/stores/11

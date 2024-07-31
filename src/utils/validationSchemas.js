@@ -5,6 +5,8 @@ const PAGINATION_SCHEMA = yup.object().shape({
     offset: yup.number().min(0).required()
 });
 
+
+
 module.exports = {
     PAGINATION_SCHEMA,
 };

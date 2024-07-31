@@ -70,6 +70,7 @@ class StoreController {
         },
         transaction: t,
         raw: true,
+        returning: ['*'],
       });
       if (!store) {
         await t.rollback();

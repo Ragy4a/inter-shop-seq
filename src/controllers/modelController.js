@@ -96,6 +96,7 @@ class ModelController {
           id,
         },
         transaction: t,
+        returning: ['id', 'title'],
         raw: true,
       });
       if (!model) {

@@ -102,6 +102,7 @@ class ItemCategoryController {
           id,
         },
         transaction: t,
+        returning: ['id', 'title'],
         raw: true,
       });
       if (!itemCategory) {

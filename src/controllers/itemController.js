@@ -26,7 +26,7 @@ class ItemController {
       const { id } = req.params;
       const item = await Item.findByPk(id, {
         attributes: {
-          exclude: ['createdAt', 'updatedAt']
+          exclude: ['category_id', 'type_id', 'brand_id', 'model_id', 'store_id', 'createdAt', 'updatedAt']
         },
         include: [
           {
@@ -182,6 +182,7 @@ class ItemController {
           id,
         },
         transaction: t,
+        returning: ['*'],
         raw: true,
       });
 

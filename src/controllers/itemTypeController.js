@@ -69,6 +69,7 @@ class ItemTypeController {
           id,
         },
         transaction: t,
+        returning: ['id', 'title'],
         raw: true,
       });
       if (!itemType) {
