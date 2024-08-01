@@ -4,7 +4,7 @@ const ID_CHECK = yup.number()
     .integer('Must be an intieger!')
     .positive('Must be positive!');
 const TITLE_CHECK = yup.string().min(2, 'Must be more than 2.').max(16, 'Must be less than 16.').required('This field is required!');
-const DESC_CHECK = yup.string().min(10).max(10).required();
+const DESC_CHECK = yup.string().min(10).max(1000).required();
 const NUMBER_CHECK = yup.number().integer().positive().required();
 
 const PAGINATION_SCHEMA = yup.object().shape({
@@ -16,7 +16,7 @@ const BRAND_SCHEMA = yup.object().shape({
     id: ID_CHECK,
     title: TITLE_CHECK,
     description: DESC_CHECK,
-    logo: yup.string().url()
+    logo: yup.string().url().nullable()
 });
 
 const CUSTOMER_SCHEMA = yup.object().shape({

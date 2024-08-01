@@ -29,6 +29,16 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Description must be more than 10 and less than 1000 symbols.'
         }
       }
+    },
+    logo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isUrl: {
+          args: true,
+          msg: 'This field must be an url.'
+        }
+      }
     }
   }, {
     sequelize,

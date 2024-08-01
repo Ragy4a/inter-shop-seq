@@ -108,6 +108,31 @@ class BrandController {
     }
   }
 
+  patchBrand = async (req, res, next) => {
+    const t = await sequelize.transaction();
+    try {
+      const { params: { id }, body } = req;
+      const patchedBrand = await Brand.update(body, {
+        where: {
+          id
+        },
+        transaction: t,
+        raw: true,
+        returning: true,
+      });
+      if(!patchedBrand) {
+        await t.rollback();
+        return next(createError(404, 'Brand not found!'));
+      };
+      await t.commit();
+      res.status(200).json(patchedBrand);
+    } catch (error) {
+      console.log(error.messsage);
+      await t.rollback();
+      next(error);
+    }
+  }
+
    changeLogo = async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -115,8 +140,8 @@ class BrandController {
         await t.rollback();
         return next(createError(400, 'No file uploaded!'));
       }
-      const { file: { filename }, params: { id } } = req; 
-      const [ [ updatedBrand ] ] = await Brand.update(
+      const { file: { filename }, params: { id } } = req;
+      const [ count, [ updatedBrand ] ] = await Brand.update(
         {
           logo: filename,
         },
@@ -130,7 +155,7 @@ class BrandController {
           returning: ['id', 'title', 'logo']
         }
       );
-      if (!updatedBrand) {
+      if (!updatedBrand || count === 0) {
         await t.rollback();
         return next(createError(404, 'Brand not found!'));
       }

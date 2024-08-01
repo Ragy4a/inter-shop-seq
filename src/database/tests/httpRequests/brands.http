@@ -2,7 +2,7 @@ GET http://localhost:5000/api/brands
 
 ###
 
-GET http://localhost:5000/api/brands/3
+GET http://localhost:5000/api/brands/11
 
 ###
 
@@ -10,8 +10,8 @@ POST http://localhost:5000/api/brands
 Content-Type: application/json
 
 {
-  "title": "Meizu",
-  "description": "Meizu Corparation"
+  "title": "Test",
+  "description": "Test645646546456"
 }
 
 ###
@@ -23,6 +23,15 @@ Content-Type: application/json
   "id": 4,
   "title": "Meizu updated",
   "description": "Meizu Corparation"
+}
+
+###
+
+PATCH http://localhost:5000/api/brands/11
+Content-Type: application/json
+
+{
+  "description": "Test7772222555"
 }
 
 ###

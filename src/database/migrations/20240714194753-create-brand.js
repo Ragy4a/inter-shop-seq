@@ -18,6 +18,16 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false
       },
+      logo: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        validate: {
+          isUrl: {
+            args: true,
+            msg: 'This field must be an url!'
+          }
+        }
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

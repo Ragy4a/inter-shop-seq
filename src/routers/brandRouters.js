@@ -15,6 +15,7 @@ router
 router
     .route('/:id')
         .get(brandController.getBrandById)
+        .patch(brandController.patchBrand)
         .delete(brandController.deleteBrand);
 router
     .route('/:id/logos')
