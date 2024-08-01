@@ -226,11 +226,20 @@ const seeders = {
       paid: false,
       created_at: new Date(),
       updated_at: new Date()
+    },
+    {
+      code: 'ORD011',
+      date: new Date(),
+      customer_id: 2,
+      amount: 100,
+      paid: false,
+      created_at: new Date(),
+      updated_at: new Date()
     }
   ],
   items: [
     {
-      category_id: 1, // Electronics
+      category_id: 1,
       type_id: 1,
       brand_id: 1,
       model_id: 1,
