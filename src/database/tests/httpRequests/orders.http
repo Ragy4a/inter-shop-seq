@@ -10,7 +10,7 @@ POST http://localhost:5000/api/orders
 Content-Type: application/json
 
 {
-  "code": "ORD012",
+  "code": "ORD011",
   "date": "2024-07-27T06:34:02.380Z",
   "amount": 150,
   "paid": false,

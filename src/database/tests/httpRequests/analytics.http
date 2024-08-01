@@ -1,0 +1,17 @@
+// Количество моделей каждого бренда
+GET http://localhost:5000/api/analytics/brand-model-counts
+
+###
+
+// Количество товаров каждого типа на каждом из складов
+GET http://localhost:5000/api/analytics/item-type-counts-per-store
+
+###
+
+// Имя покупателя, сделавшего больше всех покупок
+GET http://localhost:5000/api/analytics/top-customer-by-purchase-count
+
+###
+
+// Имя покупателя, сделавшего самую дорогую покупку
+GET http://localhost:5000/api/analytics/top-customer-by-purchase-amount
