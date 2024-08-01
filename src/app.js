@@ -9,7 +9,7 @@ const {
 
 const app = express();
 app.use(express.json());
-app.use(express.static(path.resolve('public')));
+app.use(express.static(path.resolve(process.env.STATIC_PATH)));
 
 app.use('/api', routers);
 

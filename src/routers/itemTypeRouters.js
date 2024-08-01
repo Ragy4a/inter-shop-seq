@@ -2,13 +2,15 @@ const { Router } = require('express');
 const router = new Router();
 const itemTypeController = require('../controllers/itemTypeController');
 
-const { paginate: { paginateData } } = require('../middleware');
+const { 
+    paginate: { paginateData },
+    validate: { validateDefault } } = require('../middleware');
 
 router
     .route('/')
         .get(paginateData, itemTypeController.getAllItemTypes)
-        .post(itemTypeController.createItemType)
-        .put(itemTypeController.updateItemType);
+        .post(validateDefault, itemTypeController.createItemType)
+        .put(validateDefault, itemTypeController.updateItemType);
 router
     .route('/:id')
         .get(itemTypeController.getItemTypeById)

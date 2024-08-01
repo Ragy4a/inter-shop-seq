@@ -107,6 +107,41 @@ class BrandController {
       next(error);
     }
   }
+
+   changeLogo = async (req, res, next) => {
+    const t = await sequelize.transaction();
+    try {
+      if (!req.file) {
+        await t.rollback();
+        return next(createError(400, 'No file uploaded!'));
+      }
+      const { file: { filename }, params: { id } } = req; 
+      const [ [ updatedBrand ] ] = await Brand.update(
+        {
+          logo: filename,
+        },
+        {
+          where: {
+            id,
+          },
+          transaction: t,
+          fields: ['logo'],
+          raw: true,
+          returning: ['id', 'title', 'logo']
+        }
+      );
+      if (!updatedBrand) {
+        await t.rollback();
+        return next(createError(404, 'Brand not found!'));
+      }
+      await t.commit();
+      res.status(200).json(updatedBrand);
+    } catch (error) {
+      console.log(error.message);
+      await t.rollback();
+      next(error);
+    }
+  };
 };
 
 module.exports = new BrandController();

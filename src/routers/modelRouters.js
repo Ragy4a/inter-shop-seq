@@ -2,13 +2,15 @@ const { Router } = require('express');
 const router = new Router();
 const modelController = require('../controllers/modelController');
 
-const { paginate: { paginateData } } = require('../middleware');
+const { 
+    paginate: { paginateData },
+    validate: { validateModel } } = require('../middleware');
 
 router
     .route('/')
         .get(paginateData, modelController.getAllModels)
-        .post(modelController.createModel)
-        .put(modelController.updateModel);
+        .post(validateModel, modelController.createModel)
+        .put(validateModel, modelController.updateModel);
 router
     .route('/:id')
         .get(modelController.getModelById)
