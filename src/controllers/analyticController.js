@@ -1,5 +1,5 @@
 const createError = require('http-errors');
-const { Brand, Model, Store, Item, ItemType, ItemOrder, Order, Customer, sequelize } = require('../database/models');
+const { Brand, Model, Store, Item, ItemType, Order, Customer, sequelize } = require('../database/models');
 
 class AnalyticController {
     // Количество моделей каждого бренда:
@@ -69,7 +69,7 @@ class AnalyticController {
             const topCustomer = await Customer.findOne({
                 attributes: [
                     'name',
-                    [sequelize.fn('COUNT', sequelize.col('Orders.id')), 'Orders']
+                    [sequelize.fn('COUNT', sequelize.col('Orders.id')), 'total']
                 ],
                 include: [{
                     model: Order,
@@ -77,8 +77,7 @@ class AnalyticController {
                     attributes: []
                 }],
                 group: ['Customer.id', 'Customer.name'],
-                order: [[sequelize.literal('"Orders"'), 'DESC']],
-                limit: 1,
+                order: [['total', 'DESC']],
                 subQuery: false
             });
             res.json(topCustomer);
@@ -102,8 +101,7 @@ class AnalyticController {
                     attributes: []
                 }],
                 group: ['Customer.id', 'Customer.name'],
-                order: [[sequelize.literal('max_purchase_amount'), 'DESC']],
-                limit: 1,
+                order: [['max_purchase_amount', 'DESC']],
                 subQuery: false
             });
             if (!topCustomerByAmount) {

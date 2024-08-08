@@ -1,5 +1,6 @@
 const { ValidationError } = require('yup');
 const { Sequelize: { BaseError } } = require('../database/models');
+const { MulterError } = require('./upload.mw');
 
 module.exports.validationErrorHandler = (err, req, res, next) => {
     if(err instanceof ValidationError) {
@@ -25,6 +26,17 @@ module.exports.sequelizeErrorHandler = (err, req, res, next) => {
     next(err);
   };
   
+module.exports.multerErrorHandler = (err, req, res, next) => {
+    if(err instanceof MulterError) {
+        return res.status(406).send({
+            errors: [{
+                title: 'Multer Error',
+                details: err.errors,
+            }]
+        })
+    };
+    next(err);
+};
 
 module.exports.errorHandler = (err, req, res, next) => {
 

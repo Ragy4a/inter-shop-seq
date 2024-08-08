@@ -24,3 +24,5 @@ module.exports.uploadBrandLogoImage = multer({
     storage: storageBrandLogoImage,
     fileFilter: filterImage,
 });
+
+module.exports.MulterError = multer.MulterError;
