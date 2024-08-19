@@ -1,5 +1,5 @@
 const createError = require('http-errors');
-const { Brand, Model, Store, Item, ItemType, Order, Customer, sequelize } = require('../database/models');
+const { Brand, Model, Store, Item, ItemType, Order, Customer, ItemOrder, sequelize } = require('../database/models');
 
 class AnalyticController {
     // Количество моделей каждого бренда:
@@ -93,16 +93,16 @@ class AnalyticController {
             const topCustomerByAmount = await Customer.findOne({
                 attributes: [
                     'name',
-                    [sequelize.fn('MAX', sequelize.col('Orders.amount')), 'max_purchase_amount']
+                    [sequelize.literal(`(
+                        SELECT SUM(o.amount * i.price)
+                        FROM orders o
+                        INNER JOIN item_orders io ON o.id = io.order_id
+                        INNER JOIN items i ON io.item_id = i.id
+                        WHERE o.customer_id = "Customer".id
+                    )`), 'max_purchase_amount']
                 ],
-                include: [{
-                    model: Order,
-                    as: 'Orders',
-                    attributes: []
-                }],
-                group: ['Customer.id', 'Customer.name'],
-                order: [['max_purchase_amount', 'DESC']],
-                subQuery: false
+                order: [[sequelize.literal('max_purchase_amount'), 'DESC']],
+                raw: true,
             });
             if (!topCustomerByAmount) {
                 return next(createError(400, 'Bad request!'));
@@ -112,7 +112,8 @@ class AnalyticController {
             console.log(error.message);
             next(error);
         }
-    }
+    }    
+    
 };
 
 module.exports = new AnalyticController();
