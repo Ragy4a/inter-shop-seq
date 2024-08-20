@@ -78,7 +78,8 @@ class AnalyticController {
                 }],
                 group: ['Customer.id', 'Customer.name'],
                 order: [['total', 'DESC']],
-                subQuery: false
+                subQuery: false,
+                raw: true,
             });
             res.json(topCustomer);
         } catch (error) {
@@ -90,29 +91,40 @@ class AnalyticController {
     // Имя покупателя, сделавшего самую дорогую покупку:
     getTopCustomerByPurchaseAmount = async (req, res, next) => {
         try {
-            const topCustomerByAmount = await Customer.findOne({
+            const topCustomerByAmount = await Order.findOne({
                 attributes: [
-                    'name',
-                    [sequelize.literal(`(
-                        SELECT SUM(o.amount * i.price)
-                        FROM orders o
-                        INNER JOIN item_orders io ON o.id = io.order_id
-                        INNER JOIN items i ON io.item_id = i.id
-                        WHERE o.customer_id = "Customer".id
-                    )`), 'max_purchase_amount']
+                    [sequelize.col('Customer.name'), 'customer'],
+                    [sequelize.literal('SUM("Order"."amount" * "Items"."price")'), 'total_amount']
                 ],
-                order: [[sequelize.literal('max_purchase_amount'), 'DESC']],
+                include: [
+                    {
+                      model: Customer,
+                      as: "Customer",
+                      attributes: [],
+                    },
+                    {
+                      through: {
+                        attributes: [],
+                      },
+                      model: Item,
+                      as: "Items",
+                      attributes: [],
+                    },
+                ],
+                group: ['Customer.id', 'Customer.name'],
+                order: [[sequelize.literal('total_amount'), 'DESC']],
+                subQuery: false,
                 raw: true,
             });
             if (!topCustomerByAmount) {
                 return next(createError(400, 'Bad request!'));
-            }
+            };
             res.status(200).json(topCustomerByAmount);
         } catch (error) {
             console.log(error.message);
             next(error);
         }
-    }    
+    }
     
 };
 
